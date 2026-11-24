@@ -1,0 +1,67 @@
+schema_version: 1
+
+requirements:
+  - id: CM-001
+    name: 既存機能の維持
+    domain: common
+    characteristic: functional_suitability
+    document:
+      path: quality/common.md
+      section: CM-001
+    applicability:
+      mode: always
+    verification:
+      type: automated
+      method: e2e
+
+  - id: UI-001
+    name: レスポンシブ対応
+    domain: frontend
+    characteristic: interaction_capability
+    document:
+      path: quality/frontend.md
+      section: UI-001
+    applicability:
+      mode: explicit
+    verification:
+      type: automated
+      method: e2e
+
+  - id: FE-001
+    name: TODOの入力検証
+    domain: frontend
+    characteristic: functional_suitability
+    document:
+      path: quality/frontend.md
+      section: FE-001
+    applicability:
+      mode: explicit
+    verification:
+      type: automated
+      method: unit
+
+  - id: FE-002
+    name: TODOの状態と表示の整合性
+    domain: frontend
+    characteristic: functional_suitability
+    document:
+      path: quality/frontend.md
+      section: FE-002
+    applicability:
+      mode: explicit
+    verification:
+      type: automated
+      method: unit
+
+  - id: FE-003
+    name: TODOの保存と復元
+    domain: frontend
+    characteristic: functional_suitability
+    document:
+      path: quality/frontend.md
+      section: FE-003
+    applicability:
+      mode: explicit
+    verification:
+      type: automated
+      method: integration

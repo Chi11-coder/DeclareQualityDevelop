@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-{{.StyleHash}}'; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="no-referrer">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{.Result.TicketID}} の品質検証レポート</title>
+  <style>{{.Style}}</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>品質検証レポート</h1>
+    <p><strong>{{.Result.TicketID}}</strong> {{.Result.TicketTitle}}</p>
+    <p class="muted">検証開始 <time datetime="{{.Result.StartedAt.Format "2006-01-02T15:04:05Z07:00"}}">{{.Result.StartedAt.Format "2006-01-02 15:04:05 MST"}}</time></p>
+  </header>
+  <dl class="counts" aria-label="品質要求の件数">
+    <div><dt>合格</dt><dd>{{.Counts.Passed}}</dd></div>
+    <div><dt>不合格</dt><dd>{{.Counts.Failed}}</dd></div>
+    <div><dt>未確認</dt><dd>{{.Counts.Unverified}}</dd></div>
+    <div><dt>実行エラー</dt><dd>{{.Counts.Errors}}</dd></div>
+  </dl>
+  <h2>品質要求ごとの結果</h2>
+  {{range .Result.Requirements}}
+  <article>
+    <div class="heading">
+      <h3>{{.ID}} {{.Name}}</h3>
+      <span class="status {{.Status}}">{{statusLabel .Status}}</span>
+    </div>
+    <p class="muted">検証方法 <code>{{.Method}}</code></p>
+    {{range .Checks}}
+    {{if $.Details}}
+    <details>
+      <summary>{{.ID}} <span class="status {{.Status}}">{{statusLabel .Status}}</span> <span class="muted">{{.DurationMS}} ms</span></summary>
+      {{if .Message}}<p>{{.Message}}</p>{{end}}
+      <p>作業ディレクトリ <code>{{if .Directory}}{{.Directory}}{{else}}.{{end}}</code></p>
+      <p>コマンド {{range .Command}}<code>{{printf "%q" .}}</code> {{end}}</p>
+      {{if .Output}}<pre>{{.Output}}</pre>{{end}}
+      {{if .Truncated}}<p class="muted">ログは先頭32 KiBまで表示しています。</p>{{end}}
+    </details>
+    {{else}}
+    <p>{{.ID}} <span class="status {{.Status}}">{{statusLabel .Status}}</span> <span class="muted">{{.DurationMS}} ms</span></p>
+    {{end}}
+    {{else}}
+    <p>検証コマンドが登録されていません。</p>
+    {{end}}
+  </article>
+  {{end}}
+</main>
+</body>
+</html>

@@ -1,0 +1,22 @@
+schema_version: 1
+
+checks:
+  - id: regression
+    quality_id: CM-001
+    command: ["npm", "run", "test:regression"]
+
+  - id: layout
+    quality_id: UI-001
+    command: ["npm", "run", "test:layout"]
+
+  - id: input
+    quality_id: FE-001
+    command: ["npm", "run", "test:input"]
+
+  - id: state
+    quality_id: FE-002
+    command: ["npm", "run", "test:state"]
+
+  - id: persistence
+    quality_id: FE-003
+    command: ["npm", "run", "test:persistence"]
